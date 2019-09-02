@@ -10,6 +10,4 @@
   <script src="<?php echo get_stylesheet_directory_uri(); ?>/app.js" defer="defer"></script>
 </head>
 <body <?php body_class(); ?>>
-  <main id="content">
-    <div id="app"></div> 
-  </main>
+  <main id="app"></main>
