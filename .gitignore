@@ -1,0 +1,17 @@
+# Packages
+node_modules/
+
+# Private
+.env
+
+# Builds
+dist
+*.zip
+
+# Local Server Entrypoints
+index.html
+index-production.html
+
+# Misc
+.DS_Store
+NOTES.md

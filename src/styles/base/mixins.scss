@@ -1,0 +1,45 @@
+/**
+ *  Media query for breakpoint
+ *
+ *  Accepts:
+ *  - $value: {String||Number} Breakpoint name (list found in variables.scss)
+ *  - $direction: {String} direction of media query (default: "min")
+ *
+ *  Usage:
+ *
+ *  .selector {
+ *    @include mq("xs") {
+ *      color: red;
+ *    }
+ *    @include mq(992px) {
+ *      color: green;
+ *    }
+ *  }
+ *
+ */
+
+@mixin mq($value, $direction: "min") {
+  @if type-of($value) == number and unitless($value) {
+    $value: $value + "px";
+  }
+  @if type-of($value) == string {
+    @each $breakpoint in $breakpoints {
+      @if index($breakpoint, $value) != null {
+        $value: nth($breakpoint, 1);
+      }
+    }
+  }
+
+  @if $direction == "min" {
+    @media only screen and (#{$direction}-width: #{$value}) {
+      @content;
+    }  
+  }
+
+  @if $direction == "max" {
+    @media only screen and (#{$direction}-width: #{$value - 1px}) {
+      @content;
+    }  
+  }
+  
+}

@@ -1,0 +1,55 @@
+.site-header {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 24px;
+  background-color: transparent;
+  z-index: 1000;
+
+  @include mq($screen-md) {
+    padding: 16px 48px;
+  }
+}
+
+.logo {
+  color: white;
+  font-family: $font-secondary;
+  margin: 0;
+}
+
+.icon-list {
+  display: flex;
+}
+
+.icon-list__item {
+  margin: 0 2px;
+}
+
+.icon-list__link {
+  display: block;
+  padding: 4px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: transparent;
+  @include mq($screen-sm) {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.icon-list__icon {
+  font-size: 24px;
+  color: $white;
+  transition: color 0.2s ease-in-out;
+
+  .icon-list__link:hover & {
+    color: $accent;
+  }
+}

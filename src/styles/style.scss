@@ -1,0 +1,19 @@
+/*!
+Theme Name: Mike Lerman Music
+Theme URI: https://github.com/dlerm/mike-lerman-music
+Author: Daniel Lerman
+Author URI: http://dlerman.com/
+Description: A custome wordpress theme
+Version: 1.0.0
+License: GNU General Public License
+License URI: https://www.gnu.org/licenses/gpl.html
+Tags: custom-theme, webpack
+Text Domain: mike-lerman-music
+*/
+
+@import 'base/mixins';
+@import 'base/variables';
+@import 'base/fonts';
+@import 'components/element';
+@import 'components/header';
+@import 'components/video-slider';
