@@ -10,7 +10,7 @@ class Header extends Component {
     return (
       <header className="site-header">
         <h1 className="logo" title="Mike Lerman Music">M<span className="screen-sm-up">ike </span>L<span className="screen-sm-up">erman</span></h1>
-        <IconList />
+        <IconList themeMods={this.props.themeMods} />
       </header>
     )
   }

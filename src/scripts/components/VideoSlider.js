@@ -27,7 +27,7 @@ class VideoSlider extends Component {
         {this.state.videos.map((video, index) => (
           <li className="video-slider__video-item" key={index}>
               <video className="video-slider__video" autoPlay loop muted>
-                <source src={video.custom_fields.video_file} type="video/mp4" />
+                <source src={video.video_file} type="video/mp4" />
               </video>
           </li>
         ))}

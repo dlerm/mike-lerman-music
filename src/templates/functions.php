@@ -13,32 +13,32 @@ function theme_setup() {
 add_action( 'wp_enqueue_scripts', 'theme_load_scripts' );
 function theme_load_scripts() {
   wp_enqueue_style( 'theme-style', get_stylesheet_uri() );
-  wp_enqueue_script( 'jquery' );
+  // wp_enqueue_script( 'jquery' );
 }
 add_action( 'wp_footer', 'theme_footer_scripts' );
 function theme_footer_scripts() {
   ?>
   <script>
-    jQuery(document).ready(function ($) {
+    document.addEventListener('DOMContentLoaded', function() {
       var deviceAgent = navigator.userAgent.toLowerCase();
       if (deviceAgent.match(/(iphone|ipod|ipad)/)) {
-        $("html").addClass("ios");
-        $("html").addClass("mobile");
+        document.documentElement.classList.add("ios");
+        document.documentElement.classList.add("mobile");
       }
       if (navigator.userAgent.search("MSIE") >= 0) {
-        $("html").addClass("ie");
+        document.documentElement.classList.add("ie");
       }
       else if (navigator.userAgent.search("Chrome") >= 0) {
-        $("html").addClass("chrome");
+        document.documentElement.classList.add("chrome");
       }
       else if (navigator.userAgent.search("Firefox") >= 0) {
-        $("html").addClass("firefox");
+        document.documentElement.classList.add("firefox");
       }
       else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
-        $("html").addClass("safari");
+        document.documentElement.classList.add("safari");
       }
       else if (navigator.userAgent.search("Opera") >= 0) {
-        $("html").addClass("opera");
+        document.documentElement.classList.add("opera");
       }
     });
   </script>
@@ -125,7 +125,7 @@ function theme_comment_count( $count ) {
  * @param num { Int } - maximum item count (-1 for all)
  */
 
-function register_custom_endpoint( $namespace, $path, $method, $post_type, $per_page, $num ) {
+function register_custom_post_type_endpoint( $namespace, $path, $method, $post_type, $per_page, $num ) {
 
   add_action( 'rest_api_init', function () use ( $namespace, $path, $method, $post_type, $per_page, $num ) {
 
@@ -148,7 +148,10 @@ function register_custom_endpoint( $namespace, $path, $method, $post_type, $per_
 
         $posts = get_posts($args);
         foreach ($posts as $key => $post) {
-          $posts[$key]->custom_fields = get_fields($post->ID);
+          $custom_fields = get_fields($post->ID);
+          foreach ($custom_fields as $field => $value) {
+            $posts[$key]->$field = $value;
+          }
         }
         return  $posts;
       }
@@ -171,7 +174,76 @@ $custom_post_types_arr = [
 ];
 
 foreach ($custom_post_types_arr as $path => $post_type) {
-  register_custom_endpoint('api/v1', $path, 'GET', $post_type, -1, -1 );
-  register_custom_endpoint('api/v1', $path.'/(?P<id>\d+)', 'GET', $post_type, 1, 1 );
-  register_custom_endpoint('api/v1', $path.'/(?P<slug>\S+)', 'GET', $post_type, 1, 1 );
+  register_custom_post_type_endpoint('api/v1', $path, 'GET', $post_type, -1, -1 );
+  register_custom_post_type_endpoint('api/v1', $path.'/(?P<id>\d+)', 'GET', $post_type, 1, 1 );
+  register_custom_post_type_endpoint('api/v1', $path.'/(?P<slug>\S+)', 'GET', $post_type, 1, 1 );
+}
+
+add_action('rest_api_init', 'register_theme_mods_endpoint');
+function register_theme_mods_endpoint () {
+  register_rest_route( 'api/v1', 'theme-mods', array(
+    'methods' => 'GET',
+    'callback' => 'get_theme_mods'
+  ));
+}
+
+add_action('customize_register','register_customizer');
+function register_customizer( $wp_customize ) {
+  // $wp_customize->add_panel();
+  // $wp_customize->get_panel();
+  // $wp_customize->remove_panel();
+ 
+  $wp_customize->add_section( 'social_media', array(
+    'title' => __( 'Social Media' ),
+    'description' => __( 'Add external social media links here' ),
+    'panel' => '',
+    'theme_supports' => '',
+  ));
+  // $wp_customize->get_section();
+  // $wp_customize->remove_section();
+ 
+  $wp_customize->add_setting( 'facebook_url' );
+  $wp_customize->add_setting( 'instagram_url' );
+  $wp_customize->add_setting( 'soundcloud_url' );
+  $wp_customize->add_setting( 'twitter_url' );
+  $wp_customize->add_setting( 'youtube_url' );
+  // $wp_customize->get_setting();
+  // $wp_customize->remove_setting();
+ 
+  $wp_customize->add_control( 'facebook_url', array(
+    'type' => 'url',
+    'priority' => 10,
+    'section' => 'social_media',
+    'label' => __( 'Facebook URL' ),
+  ));
+
+  $wp_customize->add_control( 'instagram_url', array(
+    'type' => 'url',
+    'priority' => 20,
+    'section' => 'social_media',
+    'label' => __( 'Instagram URL' ),
+  ));
+
+  $wp_customize->add_control( 'soundcloud_url', array(
+    'type' => 'url',
+    'priority' => 30,
+    'section' => 'social_media',
+    'label' => __( 'Soundcloud URL' ),
+  ));
+
+  $wp_customize->add_control( 'twitter_url', array(
+    'type' => 'url',
+    'priority' => 40,
+    'section' => 'social_media',
+    'label' => __( 'Twitter URL' ),
+  ));
+
+  $wp_customize->add_control( 'youtube_url', array(
+    'type' => 'url',
+    'priority' => 50,
+    'section' => 'social_media',
+    'label' => __( 'Youtube URL' ),
+  ));
+  // $wp_customize->get_control();
+  // $wp_customize->remove_control();
 }
