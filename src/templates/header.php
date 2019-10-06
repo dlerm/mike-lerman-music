@@ -11,3 +11,4 @@
 </head>
 <body <?php body_class(); ?>>
   <main id="app"></main>
+  <main id="app2"></main>

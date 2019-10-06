@@ -1,0 +1,49 @@
+.loader.ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: transparent;
+  border: 6px solid #fff;
+  border-width: 0px;
+  box-shadow: 0 0 3px #fff, inset 0 0 6px #fff;
+  animation: ripple 6s infinite linear;
+
+  &.ripple--2 {
+    opacity: 0;
+    animation: ripple 6s infinite linear;
+    animation-delay: 2s;
+  }
+
+  &.ripple--3 {
+    opacity: 0;
+    animation: ripple 6s infinite linear;
+    animation-delay: 4s;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: translate3d(-50%, -50%, 0) scale(0);
+    opacity: 1;
+  }
+  25% {
+    transform: translate3d(-50%, -50%, 0) scale(5);
+    opacity: 0.75;
+  }
+  50% {
+    transform: translate3d(-50%, -50%, 0) scale(10);
+    opacity: 0.5;
+  }
+  75% {
+    transform: translate3d(-50%, -50%, 0) scale(15);
+    opacity: 0.25;
+  }
+  100% {
+    transform: translate3d(-50%, -50%, 0) scale(20);
+    opacity: 0;
+  }
+}

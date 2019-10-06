@@ -1,4 +1,28 @@
 @font-face {
+  font-family: "American Label Rough";
+  src: url("../fonts/American-Label-Rough.woff") format("woff"),
+       url("../fonts/American-Label-Rough.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: "American Label";
+  src: url("../fonts/American-Label-Regular.woff") format("woff"),
+       url("../fonts/American-Label-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal; 
+}
+
+@font-face {
+  font-family: "American Label Strip";
+  src: url("../fonts/American-Label-Strip.woff") format("woff"),
+       url("../fonts/American-Label-Strip.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal; 
+}
+
+@font-face {
   font-family: "Permanent Marker";
   src: url("../fonts/PermanentMarker.woff") format("woff"),
        url("../fonts/PermanentMarker.woff2") format("woff2");
