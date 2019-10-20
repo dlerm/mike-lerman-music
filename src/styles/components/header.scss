@@ -50,6 +50,8 @@
   transition: color 0.2s ease-in-out;
 
   .icon-list__link:hover & {
-    color: $accent;
+    // color: $accent;
+    // color: $tan;
+    color: $black;
   }
 }
