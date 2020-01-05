@@ -51,6 +51,16 @@ module.exports = {
   devServer: {
     contentBase: './',
     // hot: true,
+    stats: {
+      assets: false,
+      children: false,
+      colors: true,
+      hash: false,
+      modules: false,
+      time: false,
+      warnings: false,
+      version: false,
+    },
   },
   entry: {
     app: './src/scripts/app.js'
