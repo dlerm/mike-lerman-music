@@ -1,0 +1,9 @@
+.video-page {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: $black;
+  width: 100%;
+  height: 100vh;
+  min-height: 600px;
+}

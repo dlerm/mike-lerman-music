@@ -21,6 +21,8 @@
   margin: 0;
 }
 
+// .logo__link {}
+
 .icon-list {
   display: flex;
 }
@@ -30,6 +32,7 @@
 }
 
 .icon-list__link {
+  position: relative;
   display: block;
   padding: 4px;
   width: 32px;
@@ -42,16 +45,41 @@
     width: 48px;
     height: 48px;
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0%;
+    height: 2px;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+    transform: translate3d(-50%, 0, 0);
+    background-color: $tan;
+  }
+
+  &:focus,
+  &:active,
+  &:hover {
+    outline: 0;
+
+    &:before {
+      opacity: 1;
+      width: 30px;
+    }
+  }
 }
 
 .icon-list__icon {
+  position: relative;
   font-size: 24px;
   color: $white;
   transition: color 0.2s ease-in-out;
 
-  .icon-list__link:hover & {
-    // color: $accent;
-    // color: $tan;
-    color: $black;
-  }
+  // .icon-list__link:hover & {
+  //   // color: $accent;
+  //   // color: $tan;
+  //   // color: $black;
+  // }
 }

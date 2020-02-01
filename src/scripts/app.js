@@ -5,98 +5,77 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Header from './components/Header';
-import VideoSlider from './components/VideoSlider';
+import VideoPage from './components/VideoPage';
 import AnimatedHero from './components/AnimatedHero';
 
-// class App extends Component {
-
-//   constructor (props) {
-//     super(props);
-//     this.state = {
-//       theme_mods: {}
-//     }
-//   }
-
-//   componentDidMount () {
-//     fetch('https://mikelermanmusic.com/wp-json/api/v1/theme-mods')
-//     .then(res => res.json())
-//     .then(theme_mods => {
-//       this.setState({
-//         ...this.state,
-//         theme_mods
-//       });
-//     });
-//   }
-
-//   render () {
-//     return (
-//       <div>
-//         <Header themeMods={this.state.theme_mods} />
-//         <main>
-//           <VideoSlider />
-//         </main>
-//         <footer></footer>
-//       </div>
-//     )
-//   }
-// }
- 
-// ReactDOM.render(<App />, document.getElementById('app'));
-
-class App2 extends Component {
+class App extends Component {
 
   constructor (props) {
     super(props);
     this.state = {
       theme_mods: {},
+      videos: [],
+      muted: false,
     }
+
+    this.volumeToggle = React.createRef();
+    this.toggleVolume = this.toggleVolume.bind(this);
+    this.setVolume = this.setVolume.bind(this);
+  }
+
+  preloadFirstVideo () {
+    if (this.state.videos.length) fetch(this.state.videos[0].video_file);
+  }
+
+  toggleVolume (event) {
+    this.setState({ muted: !this.state.muted });
+  }
+
+  setVolume (muted) {
+    document.querySelectorAll('audio, video').forEach(element => element.muted = muted || this.state.muted);
+  }
+
+  componentDidUpdate (prevtProps, prevState, snapshot) {
+    this.setVolume();
   }
 
   componentDidMount () {
     fetch('https://mikelermanmusic.com/wp-json/api/v1/theme-mods')
     .then(res => res.json())
     .then(theme_mods => {
-      this.setState({
-        ...this.state,
-        theme_mods
-      });
+      this.setState({ theme_mods });
+    });
+
+    fetch('https://mikelermanmusic.com/wp-json/api/v1/music-videos/intro')
+    .then(res => res.json())
+    .then(videos => {
+      this.setState({ videos });
+      this.preloadFirstVideo();
     });
   }
 
   render () {
     return (
       <Router>
-        <Header themeMods={this.state.theme_mods} />
+        <Header themeMods={this.state.theme_mods} muted={this.state.muted} toggleVolume={this.toggleVolume} />
         <main>
           <Switch>
-            <Route exact path="/" component={AnimatedHero} />
-            <Route path="/about" component={VideoSlider} />
+            <Route exact path="/">
+              <AnimatedHero muted={this.state.muted} />
+            </Route>
+            <Route path="/about">
+              <VideoPage videoSlug="intro" autoPlay controls controlsList="nodownload" disablePictureInPicture />
+            </Route>
           </Switch>
         </main>
-        <footer></footer>
       </Router>
     )
   }
 }
 
-// export default function App3() {
-//   let location = useLocation();
-//   return (
-//     <Router>
-//       <Header themeMods={this.state.theme_mods} />
-//       <main>
-//         <Switch location={location}>
-//           <Route path="/" component={AnimatedHero} />
-//           <Route path="/about" component={VideoSlider} />
-//         </Switch>
-//       </main>
-//       <footer></footer>
-//     </Router>
-//   );
-// }
  
 ReactDOM.render(
-  <App2 />,
+  <App />,
   document.getElementById('root')
 );
 

@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
+import FAIcon from './FAIcon';
+import ButtonIcon from './ButtonIcon';
 
 class IconList extends Component {
   constructor (props) {
     super(props);
+    // this.toggleVolume = this.toggleVolume.bind(this);
+    this.thing = this.thing.bind(this);
+  }
+
+  // toggleVolume (event) {
+  //   console.log(this);
+  //   // this.state.icon = this.state.icon === 'volume-up' ? 'volume-off' : 'volume-up';
+  //   // document.querySelector('video').muted = !document.querySelector('video').muted;
+  // }
+
+  thing() {
+    console.log(this);
+  }
+
+  componentDidMount () {
+    console.log('IconList', this)
   }
 
   render () {
@@ -20,31 +38,34 @@ class IconList extends Component {
           {soundcloud_url &&
             <li className="icon-list__item">
               <a className="icon-list__link" title="soundcloud" href={soundcloud_url} target="_blank">
-                <i className="fa fa-soundcloud icon-list__icon icon icon--soundcloud"></i>
+                <FAIcon name="soundcloud" classes="icon-list__icon" />
               </a>
             </li>
           }
           {youtube_url &&
             <li className="icon-list__item">
               <a className="icon-list__link" title="youtube" href={youtube_url} target="_blank">
-                <i className="fa fa-youtube icon-list__icon icon icon--youtube"></i>
+                <FAIcon name="youtube" classes="icon-list__icon" />
               </a>
             </li>
           }
           {facebook_url &&
             <li className="icon-list__item">
               <a className="icon-list__link" title="facebook" href={facebook_url} target="_blank">
-                <i className="fa fa-facebook-square icon-list__icon icon icon--facebook"></i>
+                <FAIcon name="facebook-square" classes="icon-list__icon" />
               </a>
             </li>
           }
           {instagram_url &&
             <li className="icon-list__item">
               <a className="icon-list__link" title="instagram" href={instagram_url} target="_blank">
-                <i className="fa fa-instagram icon-list__icon icon icon--instagram"></i>
+                <FAIcon name="instagram" classes="icon-list__icon" />
               </a>
             </li>
           }
+          <li className="icon-list__item">
+            <ButtonIcon icon="volume-up" click={this.props.toggleVolume} className="icon-list__link" muted={this.props.muted} />  
+          </li>
         </ul>
       </nav>
     )

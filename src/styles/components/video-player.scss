@@ -1,0 +1,29 @@
+.video-player {
+  position: relative;
+  width: 100%;
+
+  &:before,
+  &:after {
+    position: absolute;
+    display: block;
+    content: '';
+    height: 30%;
+    width: 100%;
+    left: 0;
+    pointer-events: none;
+  }
+
+  &:before {
+    top: 0;
+    background-image: linear-gradient($black, transparent);
+  }
+
+  &:after {
+    bottom: 0;
+    background-image: linear-gradient(transparent, $black);
+  }
+}
+
+.video-player__video {
+  max-height: 100vh;
+}

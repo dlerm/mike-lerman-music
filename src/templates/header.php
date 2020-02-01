@@ -8,7 +8,9 @@
   <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" type="text/css" href="<?php bloginfo('stylesheet_url'); ?>" />
   <script src="<?php echo get_stylesheet_directory_uri(); ?>/app.js" defer="defer"></script>
+  <script type="text/javascript">window.themeDir = '<?php echo get_stylesheet_directory_uri(); ?>'</script>
 </head>
 <body <?php body_class(); ?>>
-  <main id="app"></main>
-  <main id="app2"></main>
+  <main>
+    <div id="root"></div>
+  </main>

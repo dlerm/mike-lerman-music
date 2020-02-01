@@ -7,7 +7,9 @@ const plugins = [
   new CleanWebpackPlugin(),
   new CopyPlugin([
     { from: 'src/templates', to: path.resolve(__dirname, 'dist'), flatten: true },
-    { from: 'src/template-parts', to: path.resolve(__dirname, 'dist'), flatten: true }
+    { from: 'src/template-parts', to: path.resolve(__dirname, 'dist'), flatten: true },
+    { from: 'src/fonts', to: path.resolve(__dirname, 'dist/fonts') },
+    { from: 'src/images', to: path.resolve(__dirname, 'dist/images') },
   ], { copyUnmodified: true }),
   new MiniCssExtractPlugin({ filename: 'style.css' }),
 ];

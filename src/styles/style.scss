@@ -1,5 +1,5 @@
 /*!
-Theme Name: Mike Lerman Music
+Theme Name: Mike Lerman Music Staging
 Theme URI: https://github.com/dlerm/mike-lerman-music
 Author: Daniel Lerman
 Author URI: http://dlerman.com/
@@ -16,6 +16,8 @@ Text Domain: mike-lerman-music
 @import 'base/fonts';
 @import 'components/element';
 @import 'components/header';
+@import 'components/button';
 @import 'components/loader';
 @import 'components/hero-animated';
-@import 'components/video-slider';
+@import 'components/video-page';
+@import 'components/video-player';

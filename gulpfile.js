@@ -17,6 +17,6 @@ const gulpSSH = new GulpSSH({
 });
 
 gulp.task('deploy', () => {
-  return gulp.src('dist/*')
+  return gulp.src('dist/**/*')
   .pipe(gulpSSH.dest(process.env.SFTP_THEME_PATH));
 });
