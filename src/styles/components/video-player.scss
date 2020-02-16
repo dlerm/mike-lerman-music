@@ -27,3 +27,34 @@
 .video-player__video {
   max-height: 100vh;
 }
+
+.video-player__btn {
+  position: absolute;
+  bottom: 4%;
+  right: 0;
+  width: 48px;
+  height: 48px;
+  z-index: 10;
+
+  @include mq($screen-xs) {
+    right: 24px;
+  }
+
+  @include mq($screen-md) {
+    right: 48px;
+  }
+
+  @include mq($screen-xl) {
+    display: none;
+  }
+}
+
+.video-player__btn-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 24px;
+  opacity: 0.2;
+  color: $white;
+  transform: translate(-50%, -50%);
+}

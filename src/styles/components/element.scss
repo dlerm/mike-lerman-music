@@ -41,6 +41,31 @@ img {
   }
 }
 
+.screen-sm-down {
+  @include mq($screen-sm) {
+    display: none;
+  }
+}
+
+.screen-md-up {
+  @include mq($screen-md, 'max') {
+    display: none;
+  }
+}
+
+.screen-lg-up {
+  @include mq($screen-lg, 'max') {
+    display: none;
+  }
+}
+
+button {
+  background-color: transparent;
+  box-shadow: none;
+  border: 0;
+  cursor: pointer;
+}
+
 // .video-container {
 //   position: relative;
 //   padding-top: 56.25%;
