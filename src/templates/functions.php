@@ -115,6 +115,16 @@ function theme_comment_count( $count ) {
   }
 }
 
+function add_custom_headers() {
+  add_filter( 'rest_pre_serve_request', function( $value ) {
+    header( 'Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
+    header( 'Access-Control-Allow-Origin: *' );
+    header( 'Access-Control-Allow-Methods: GET' );
+    header( 'Access-Control-Allow-Credentials: true' );
+    return $value;
+  } );
+}
+
 /**
  * Register API Endpoints
  * @param namespace { String } - endpoint vendor/version
@@ -126,7 +136,7 @@ function theme_comment_count( $count ) {
  */
 
 function register_custom_post_type_endpoint( $namespace, $path, $method, $post_type, $per_page, $num ) {
-
+  add_action( 'rest_api_init', 'add_custom_headers', 15);
   add_action( 'rest_api_init', function () use ( $namespace, $path, $method, $post_type, $per_page, $num ) {
 
     register_rest_route( $namespace, $path, array(
@@ -246,4 +256,50 @@ function register_customizer( $wp_customize ) {
   ));
   // $wp_customize->get_control();
   // $wp_customize->remove_control();
+
+  $wp_customize->add_section( 'index', array(
+    'title' => __( 'Home Page' ),
+    'description' => __( 'Edit home page settings here' ),
+    'panel' => '',
+    'theme_supports' => '',
+  ));
+
+  $wp_customize->add_setting( 'index_desktop_bg' );
+  $wp_customize->add_setting( 'index_mobile_bg' );
+
+  $wp_customize->add_control( new WP_Customize_Image_Control(
+    $wp_customize, 'index_desktop_bg', array(
+      'label' => 'Desktop background Image',
+      'section' => 'index',
+      'settings' => 'index_desktop_bg',
+      'priority' => 10,
+    )
+  ));
+
+  $wp_customize->add_control( new WP_Customize_Image_Control(
+    $wp_customize, 'index_mobile_bg', array(
+      'label' => 'Mobile background Image',
+      'section' => 'index',
+      'settings' => 'index_mobile_bg',
+      'priority' => 20,
+    )
+  ));
 }
+
+// add_filter( 'wp_headers', array( 'eg_send_cors_headers' ), 11, 1 );
+// function eg_send_cors_headers( $headers ) {
+//   $headers['Access-Control-Allow-Origin'] = get_http_origin(); // Can't use wildcard origin for credentials requests, instead set it to the requesting origin
+//   $headers['Access-Control-Allow-Credentials'] = 'true';
+//   // Access-Control headers are received during OPTIONS requests
+//   if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
+//     if ( isset( $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] ) ) {
+//       $headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
+//     }
+
+//     if ( isset( $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] ) ) {
+//       $headers['Access-Control-Allow-Headers'] = $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'];
+//     }
+//   }
+
+//   return $headers;
+// }

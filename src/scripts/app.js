@@ -12,19 +12,16 @@ class App extends Component {
 
   constructor (props) {
     super(props);
-    this.state = {
-      theme_mods: {},
+    this.state = {      
+      theme_mods: {
+        loaded: false,
+      },
       videos: [],
       muted: false,
     }
 
-    this.volumeToggle = React.createRef();
     this.toggleVolume = this.toggleVolume.bind(this);
     this.setVolume = this.setVolume.bind(this);
-  }
-
-  preloadFirstVideo () {
-    if (this.state.videos.length) fetch(this.state.videos[0].video_file);
   }
 
   toggleVolume (event) {
@@ -40,31 +37,34 @@ class App extends Component {
   }
 
   componentDidMount () {
-    fetch('https://mikelermanmusic.com/wp-json/api/v1/theme-mods')
+    fetch('//staging.mikelermanmusic.com/wp-json/api/v1/theme-mods')
     .then(res => res.json())
     .then(theme_mods => {
-      this.setState({ theme_mods });
-    });
-
-    fetch('https://mikelermanmusic.com/wp-json/api/v1/music-videos/intro')
-    .then(res => res.json())
-    .then(videos => {
-      this.setState({ videos });
-      this.preloadFirstVideo();
-    });
+      return this.setState({
+        theme_mods: { 
+          ...theme_mods, 
+          loaded: true 
+        }
+      });
+    })
   }
 
   render () {
     return (
-      <Router>
+      <Router forceRefresh={true}>
         <Header themeMods={this.state.theme_mods} muted={this.state.muted} toggleVolume={this.toggleVolume} />
         <main>
           <Switch>
             <Route exact path="/">
-              <AnimatedHero muted={this.state.muted} />
+              { this.state.theme_mods.loaded &&
+                <AnimatedHero muted={this.state.muted} desktopImage={this.state.theme_mods.index_desktop_bg} mobileImage={this.state.theme_mods.index_mobile_bg} />
+              }
             </Route>
-            <Route path="/about">
+            <Route exact path="/about">
               <VideoPage videoSlug="intro" autoPlay controls controlsList="nodownload" disablePictureInPicture />
+            </Route>
+            <Route exact path="/apologizer">
+              <VideoPage videoSlug="apologizer" autoPlay controls controlsList="nodownload" disablePictureInPicture />
             </Route>
           </Switch>
         </main>

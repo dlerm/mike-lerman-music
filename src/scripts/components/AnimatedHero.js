@@ -7,13 +7,13 @@ class AnimatedHero extends Component {
     this.state = {
       loaded: false,
       images: {
-        // desktop: 'mikelermanmusic.com/wp-content/uploads/2019/09/hero-bg.jpg'
+        // See: https://developer.wordpress.com/docs/photon/
         desktop: {
-          src: '//i0.wp.com/mikelermanmusic.com/wp-content/uploads/2020/02/HPDesktopBG-scaled.jpg',
+          src: this.props.desktopImage.replace('https://', 'https://i0.wp.com/'),
           loaded: false,
         },
         mobile: {
-          src: '//i0.wp.com/mikelermanmusic.com/wp-content/uploads/2020/02/HPMobileBG.jpg',
+          src: this.props.mobileImage.replace('https://', 'https://i0.wp.com/'),
           loaded: false,
         },
       },
@@ -39,7 +39,6 @@ class AnimatedHero extends Component {
           loaded: true,
         }); 
       }
-      console.log(this.state);
     };
 
     imgMobile.onload = () => {
@@ -57,12 +56,10 @@ class AnimatedHero extends Component {
           loaded: true,
         }); 
       }
-      console.log(this.state);
     };
 
     imgDesktop.src = this.state.images.desktop.src;
     imgMobile.src = this.state.images.mobile.src;
-    console.log(this.state);
   }
 
   render () {
@@ -90,7 +87,7 @@ class AnimatedHero extends Component {
               <div className="hero__overlay-content">
                 <p className="hero__overlay-text">click the hound for sound</p>
                 <img class="hero__overlay-arrow screen-sm-up" src="http://mikelermanmusic.com/wp-content/uploads/2019/10/arrow-curved-right.png" />
-                <Link className="hero__overlay-button" to="/about">
+                <Link className="hero__overlay-button" to="/apologizer">
                   <img class="hero__button-icon style-svg" src={`${window.themeDir}/images/underdog-logo.svg`} />
                 </Link> 
               </div>
