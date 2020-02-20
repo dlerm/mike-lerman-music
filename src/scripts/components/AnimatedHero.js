@@ -78,9 +78,7 @@ class AnimatedHero extends Component {
               <source media="(min-width: 0px)" srcset={`${this.state.images.mobile.src}?w=320, ${this.state.images.mobile.src}?w=320&zoom=2 2x`} />
               <img className="hero__image" src={this.state.images.desktop.src} srcset={this.state.images.desktop.src} alt="MLM" />
             </picture>
-            <div className="hero__image-wrapper hero__image-wrapper--blur">
-              <img className="hero__image hero__image--blur" src={this.state.images.desktop.src} alt="MLM" />
-            </div>
+            
             <div className="hero__overlay">
               <h1 className="hero__overlay-title">Mike Lerman</h1>
               <h2 className="hero__overlay-subtitle">Underdog</h2>

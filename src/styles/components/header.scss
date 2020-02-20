@@ -41,6 +41,7 @@
   font-family: $font-primary;
   font-size: 70px;
   letter-spacing: 2px;
+  font-weight: 400;
   margin: 0;
   color: $white;
   opacity: 0;
@@ -67,8 +68,6 @@
   font-family: $font-secondary;
   margin: 0;
 }
-
-// .logo__link {}
 
 .icon-list {
   display: flex;
@@ -123,10 +122,4 @@
   font-size: 24px;
   color: $white;
   transition: color 0.2s ease-in-out;
-
-  // .icon-list__link:hover & {
-  //   // color: $accent;
-  //   // color: $tan;
-  //   // color: $black;
-  // }
 }

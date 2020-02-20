@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import FAIcon from './FAIcon';
+import FAIcon from './FAIcon';
 
 class ButtonIcon extends Component {
   constructor (props) {

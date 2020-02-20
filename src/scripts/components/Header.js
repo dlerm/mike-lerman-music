@@ -87,13 +87,13 @@ class Header extends Component {
         <nav className={`site-nav menu menu--v-slide menu--full-screen menu--flex menu--h-align-center menu--v-align-center ${this.state.menuIsOpen ? 'is-open' : ''}`}>
           <ul className="menu__list">
             <li className="menu__item">
-              <Link to="/" className="menu__link" onClick={this.closeMenu}>Home</Link>
+              <Link to="/" className="menu__link" onClick={this.closeMenu}>home</Link>
             </li>
             <li className="menu__item">
-              <Link to="/about" className="menu__link" onClick={this.closeMenu}>Intro</Link>
+              <Link to="/about" className="menu__link" onClick={this.closeMenu}>intro</Link>
             </li>
             <li className="menu__item">
-              <Link to="/apologizer" className="menu__link" onClick={this.closeMenu}>Apologizer</Link>
+              <Link to="/apologizer" className="menu__link" onClick={this.closeMenu}>apologizer</Link>
             </li>
           </ul>
         </nav>

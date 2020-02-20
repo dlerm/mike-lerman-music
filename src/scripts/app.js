@@ -22,6 +22,10 @@ class App extends Component {
 
     this.toggleVolume = this.toggleVolume.bind(this);
     this.setVolume = this.setVolume.bind(this);
+    this.fetchThemeMods = this.fetchThemeMods.bind(this);
+    this.setViewportHeightStyleVar = this.setViewportHeightStyleVar.bind(this);
+    this.bindUI = this.bindUI.bind(this);
+    this.viewportSize = this.viewportSize.bind(this)
   }
 
   toggleVolume (event) {
@@ -37,7 +41,13 @@ class App extends Component {
   }
 
   componentDidMount () {
-    fetch('//staging.mikelermanmusic.com/wp-json/api/v1/theme-mods')
+    this.setViewportHeightStyleVar();
+    this.bindUI();
+    this.fetchThemeMods();
+  }
+
+  fetchThemeMods () {
+    fetch('https://staging.mikelermanmusic.com/wp-json/api/v1/theme-mods')
     .then(res => res.json())
     .then(theme_mods => {
       return this.setState({
@@ -46,7 +56,28 @@ class App extends Component {
           loaded: true 
         }
       });
-    })
+    });
+  }
+
+  setViewportHeightStyleVar () {
+    const vh100 = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh100}px`);
+  }
+
+  viewportSize () {
+    var test = document.createElement( "div" );
+
+    test.style.cssText = "position: fixed;top: 0;left: 0;bottom: 0;right: 0;";
+    document.documentElement.insertBefore( test, document.documentElement.firstChild );
+    
+    var dims = { width: test.offsetWidth, height: test.offsetHeight };
+    document.documentElement.removeChild( test );
+    
+    return dims.height;
+  }
+
+  bindUI () {
+    window.addEventListener('resize', this.setViewportHeightStyleVar);
   }
 
   render () {

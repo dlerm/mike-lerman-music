@@ -62,8 +62,9 @@
 }
 
 .menu__link {
+  position: relative;
   font-family: $font-primary;
-  display: block;
+  display: inline-block;
   padding: 12px;
   color: $white;
   font-size: 40px;
@@ -71,5 +72,26 @@
   @media screen and (max-height: 420px) and (max-width: 812px) {
     font-size: 24px;
     padding: 6px;
+  }
+
+  &:after {
+    position: absolute;
+    content: '';
+    bottom: 0;
+    left: 50%;
+    width: calc(100% - 24px);
+    height: 2px;
+    background-color: $tan;
+    transform-origin: 0 0;
+    transform: scale(0, 1) translate3d(-50%, 0, 0);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &:focus,
+  &:active,
+  &:hover {
+    &:after {
+      transform: scale(1, 1) translate3d(-50%, 0, 0);
+    }
   }
 }

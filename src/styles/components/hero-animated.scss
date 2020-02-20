@@ -2,7 +2,9 @@
   &--animated {
     position: relative;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: var(--vh100, 100vh);
     overflow: hidden;
 
     @include mq($screen-xl) {
@@ -13,14 +15,10 @@
 
 .hero__image-wrapper {
   display: block;
-  // position: absolute;
-  // top: 50%;
-  // left: 50%;
-  // transform: translate3d(-50%, -50%, 0);
-  // min-width: 100%;
-  // min-height: 100%;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: var(--vh100, 100vh);
   z-index: 2;
   animation: HeroPictureNormalFadeIn 3s forwards ease;
 
@@ -45,19 +43,27 @@
 }
 
 .hero__overlay {
-  display: inline-block;
+  display: flex;
+  flex-flow: column nowrap;
   position: absolute;
   z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+  height: var(--vh100, 100vh);
   left: 50%;
   transform: translateX(-50%);
-  padding: 48px 0 24px;
+  padding: 48px 0;
 
-  display: flex;
-  flex-flow: column nowrap;
+  @include mq($screen-xs) {
+    padding: 48px 0 96px;
+  }
+
+  @include mq(414px) {
+    padding: 48px 0 120px;
+  }
 
   @include mq($screen-md) {
     padding: 96px 0 24px;
@@ -145,6 +151,7 @@
   font-family: $font-primary;
   color: $white;
   font-size: 45px;
+  line-height: 1;
   letter-spacing: 1.3px;
   text-align: right;
   max-width: 250px;
@@ -174,7 +181,9 @@
 }
 
 .hero__overlay-button {
+  display: block;
   max-width: 150px;
+  outline: 0;
 
   @include mq($screen-md) {
     max-width: 220px;
@@ -182,6 +191,7 @@
 }
 
 .hero__button-icon {
+  display: block;
   width: 100%;
   height: 100%;
   transition: filter 0.2s ease-in-out;
@@ -198,6 +208,13 @@
   .hero__overlay-button:hover & {
     @include mq($screen-md) {
       filter: drop-shadow(2px 2px 4px $tan) drop-shadow(-3px -3px 0px $white);
+    }
+  }
+
+  .hero__overlay-button:active &,
+  .hero__overlay-button:focus & {
+    @include mq($screen-sm, 'max') {
+      filter: drop-shadow(2px 2px 4px $tan) drop-shadow(-3px -3px 0px $white) drop-shadow(-1px -1px 16px #F5CD65);
     }
   }
 }

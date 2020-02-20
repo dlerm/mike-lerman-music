@@ -32,7 +32,7 @@ class VideoPlayer extends Component {
     .then(res => res.json())
     .then(res => res[0])
     .then(video => {
-      this.setState({ videoFile: video.video_file });
+      this.setState({ videoFile: video.video_file, poster: video.video_placeholder });
     });
   }
 
@@ -53,8 +53,8 @@ class VideoPlayer extends Component {
 
   render () {
     return (
-      <div className="video-player">
-        <video { ...this.props } className="video-player__video" id="video" ref={this.video} onTouchEnd={this.toggleVideoState}>
+      <div className={`video-player ${this.props.fadeEdges ? 'video-player--fade-edges' : '' }`}>
+        <video { ...this.props } className="video-player__video" id="video" ref={this.video} onTouchEnd={this.toggleVideoState} poster={this.state.poster}>
           { this.state.videoFile &&
             <source src={this.state.videoFile} type="video/mp4" />
           }
