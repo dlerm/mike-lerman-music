@@ -78,6 +78,11 @@ class Header extends Component {
               </li>
             }
             <li className="icon-list__item">
+              <a className="icon-list__link" title="Email" href="mailto:mike@mikelermanmusic.com">
+                <FAIcon name="envelope-o" className="icon-list__icon" />
+              </a>
+            </li>
+            <li className="icon-list__item">
               <button className={`btn btn--icon icon-list__link`} onClick={this.props.toggleVolume} title={this.props.muted ? 'Unmute': 'Mute' }>
                 <FAIcon name={this.props.muted ? 'volume-off': 'volume-up' } className="icon-list__icon" />
               </button>
