@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import VideoPage from './components/VideoPage';
 import AnimatedHero from './components/AnimatedHero';
+import JetpackForm from './components/JetpackForm';
 
 class App extends Component {
 
@@ -25,7 +26,6 @@ class App extends Component {
     this.fetchThemeMods = this.fetchThemeMods.bind(this);
     this.setViewportHeightStyleVar = this.setViewportHeightStyleVar.bind(this);
     this.bindUI = this.bindUI.bind(this);
-    this.viewportSize = this.viewportSize.bind(this)
   }
 
   toggleVolume (event) {
@@ -64,18 +64,6 @@ class App extends Component {
     document.documentElement.style.setProperty('--vh', `${vh100}px`);
   }
 
-  viewportSize () {
-    var test = document.createElement( "div" );
-
-    test.style.cssText = "position: fixed;top: 0;left: 0;bottom: 0;right: 0;";
-    document.documentElement.insertBefore( test, document.documentElement.firstChild );
-    
-    var dims = { width: test.offsetWidth, height: test.offsetHeight };
-    document.documentElement.removeChild( test );
-    
-    return dims.height;
-  }
-
   bindUI () {
     window.addEventListener('resize', this.setViewportHeightStyleVar);
   }
@@ -97,6 +85,9 @@ class App extends Component {
             <Route exact path="/apologizer">
               <VideoPage videoSlug="apologizer" autoPlay controls controlsList="nodownload" disablePictureInPicture />
             </Route>
+            <Route exact path="/contact">
+              <JetpackForm className="contact-form" formPageId="2" ajax={true} successMsg="Thanks for your message! 🤘" errorMsg="Something's not right, please try again. 🤔" />
+            </Route>
           </Switch>
         </main>
       </Router>
@@ -111,12 +102,12 @@ ReactDOM.render(
 );
 
 // HMR
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
-if (module.hot) {
-  module.hot.dispose(() => {
-    // reset/undo the behavior/side effect that as possibly enabled/enacted
-  });
-}
+// if (module.hot) {
+//   module.hot.dispose(() => {
+//     // reset/undo the behavior/side effect that as possibly enabled/enacted
+//   });
+// }
