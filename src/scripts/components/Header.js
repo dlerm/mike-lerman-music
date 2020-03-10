@@ -9,6 +9,7 @@ class Header extends Component {
 
     this.state = {
       menuIsOpen: false,
+      menu: this.props.menu
     }
 
     this.toggleMenu = this.toggleMenu.bind(this);
@@ -90,17 +91,18 @@ class Header extends Component {
           </ul>
         </nav>
         <nav className={`site-nav menu menu--v-slide menu--full-screen menu--flex menu--h-align-center menu--v-align-center ${this.state.menuIsOpen ? 'is-open' : ''}`}>
-          <ul className="menu__list">
-            <li className="menu__item">
-              <Link to="/" className="menu__link" onClick={this.closeMenu}>home</Link>
-            </li>
-            <li className="menu__item">
-              <Link to="/about" className="menu__link" onClick={this.closeMenu}>intro</Link>
-            </li>
-            <li className="menu__item">
-              <Link to="/apologizer" className="menu__link" onClick={this.closeMenu}>apologizer</Link>
-            </li>
-          </ul>
+          { this.props.menu.loaded &&
+            <ul className="menu__list">
+              {this.props.menu.items.map((item) => {
+                const path = item.url.split('.com')[1] || '/';
+                return (
+                  <li className="menu__item">
+                    <Link to={path} className="menu__link" onClick={this.closeMenu}>{item.title}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          }
         </nav>
       </header>
     )

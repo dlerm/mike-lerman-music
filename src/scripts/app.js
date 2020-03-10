@@ -2,7 +2,7 @@ import '../styles/style.scss';
 
 import React, { Component} from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 import Header from './components/Header';
 import VideoPage from './components/VideoPage';
@@ -17,6 +17,10 @@ class App extends Component {
       theme_mods: {
         loaded: false,
       },
+      menu: {
+        items: [],
+        loaded: false,
+      },
       videos: [],
       muted: false,
     }
@@ -24,6 +28,7 @@ class App extends Component {
     this.toggleVolume = this.toggleVolume.bind(this);
     this.setVolume = this.setVolume.bind(this);
     this.fetchThemeMods = this.fetchThemeMods.bind(this);
+    this.fetchMenu = this.fetchMenu.bind(this);
     this.setViewportHeightStyleVar = this.setViewportHeightStyleVar.bind(this);
     this.bindUI = this.bindUI.bind(this);
   }
@@ -44,17 +49,36 @@ class App extends Component {
     this.setViewportHeightStyleVar();
     this.bindUI();
     this.fetchThemeMods();
+    this.fetchMenu('main-menu');
+    this.setVolume();
   }
 
   fetchThemeMods () {
-    fetch('https://staging.mikelermanmusic.com/wp-json/api/v1/theme-mods')
+    fetch('https://mikelermanmusic.com/wp-json/api/v1/theme-mods')
     .then(res => res.json())
     .then(theme_mods => {
+      console.log("THEME_MODS", theme_mods);
       return this.setState({
         theme_mods: { 
           ...theme_mods, 
           loaded: true 
         }
+      });
+    });
+  }
+
+  fetchMenu (slug) {
+    fetch(`https://mikelermanmusic.com/wp-json/api/v1/menus/${slug}`)
+    .then(res => res.json())
+    .then(menu => {
+      console.log("MENU", menu);
+      return this.setState({
+        menu: { 
+          items: menu, 
+          loaded: true 
+        }
+      }, (state) => {
+        console.log('STATE', this.state)
       });
     });
   }
@@ -71,7 +95,7 @@ class App extends Component {
   render () {
     return (
       <Router forceRefresh={true}>
-        <Header themeMods={this.state.theme_mods} muted={this.state.muted} toggleVolume={this.toggleVolume} />
+        <Header themeMods={this.state.theme_mods} menu={this.state.menu} muted={this.state.muted} toggleVolume={this.toggleVolume} />
         <main>
           <Switch>
             <Route exact path="/">
@@ -79,13 +103,18 @@ class App extends Component {
                 <AnimatedHero muted={this.state.muted} desktopImage={this.state.theme_mods.index_desktop_bg} mobileImage={this.state.theme_mods.index_mobile_bg} />
               }
             </Route>
+
+            <Route exact path="/music_video/:slug" component={VideoPage} />
+            
             <Route exact path="/about">
-              <VideoPage videoSlug="intro" autoPlay controls controlsList="nodownload" disablePictureInPicture />
+              <Redirect to="/music_video/intro" />
             </Route>
+
             <Route exact path="/apologizer">
-              <VideoPage videoSlug="apologizer" autoPlay controls controlsList="nodownload" disablePictureInPicture />
+              <Redirect to="/music_video/intro" />
             </Route>
-            <Route exact path="/contact">
+            
+            <Route path="/contact">
               <JetpackForm className="contact-form" formPageId="2" ajax={true} successMsg="Thanks for your message! 🤘" errorMsg="Something's not right, please try again. 🤔" />
             </Route>
           </Switch>

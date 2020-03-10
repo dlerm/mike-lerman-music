@@ -44,8 +44,6 @@
 }
 
 .menu__list {
-
-
   .menu--v-slide & {
     opacity: 0;
     transition: 0.3s ease-in-out;
@@ -57,9 +55,9 @@
   }
 }
 
-.menu__item {
+// .menu__item {
 
-}
+// }
 
 .menu__link {
   position: relative;
@@ -68,6 +66,7 @@
   padding: 12px;
   color: $white;
   font-size: 40px;
+  text-transform: lowercase;
 
   @media screen and (max-height: 420px) and (max-width: 812px) {
     font-size: 24px;

@@ -191,11 +191,30 @@ foreach ($custom_post_types_arr as $path => $post_type) {
 
 add_action('rest_api_init', 'register_theme_mods_endpoint');
 function register_theme_mods_endpoint () {
+  add_action( 'rest_api_init', 'add_custom_headers', 15);
   register_rest_route( 'api/v1', 'theme-mods', array(
     'methods' => 'GET',
     'callback' => 'get_theme_mods'
   ));
 }
+
+//
+function register_menus_endpoint ( $namespace, $path) {
+  add_action( 'rest_api_init', 'add_custom_headers', 15);
+  add_action('rest_api_init', function () use ( $namespace, $path ) {
+    register_rest_route( $namespace, $path, array(
+      'methods' => 'GET',
+      'callback' => function ( $request_data ) {
+        if ($request_data['id']) return wp_get_nav_menu_items( $request_data['id'] );
+        else if ($request_data['slug']) return wp_get_nav_menu_items( $request_data['slug'] );
+      }
+    ));  
+  });
+}
+
+register_menus_endpoint('api/v1', 'menus/(?P<id>\d+)');
+register_menus_endpoint('api/v1', 'menus/(?P<slug>\S+)');
+//
 
 add_action('customize_register','register_customizer');
 function register_customizer( $wp_customize ) {
@@ -285,21 +304,3 @@ function register_customizer( $wp_customize ) {
     )
   ));
 }
-
-// add_filter( 'wp_headers', array( 'eg_send_cors_headers' ), 11, 1 );
-// function eg_send_cors_headers( $headers ) {
-//   $headers['Access-Control-Allow-Origin'] = get_http_origin(); // Can't use wildcard origin for credentials requests, instead set it to the requesting origin
-//   $headers['Access-Control-Allow-Credentials'] = 'true';
-//   // Access-Control headers are received during OPTIONS requests
-//   if ( 'OPTIONS' == $_SERVER['REQUEST_METHOD'] ) {
-//     if ( isset( $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD'] ) ) {
-//       $headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS';
-//     }
-
-//     if ( isset( $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'] ) ) {
-//       $headers['Access-Control-Allow-Headers'] = $_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS'];
-//     }
-//   }
-
-//   return $headers;
-// }

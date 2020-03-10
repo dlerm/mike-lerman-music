@@ -6,10 +6,10 @@ class VideoPage extends Component {
     super(props);
   }
 
-  render () {
+  render (thing) {
     return (
       <div className="video-page">
-        <VideoPlayer { ...this.props } />
+        <VideoPlayer videoSlug={this.props.match.params.slug} autoPlay controls controlsList="nodownload" disablePictureInPicture />
       </div>
     )
   }
